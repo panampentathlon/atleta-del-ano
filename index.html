@@ -126,7 +126,11 @@ section{padding:88px 0}
 .flag{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:8px;background:rgba(3,27,63,.78);backdrop-filter:blur(6px);color:#fff;font-size:.78rem;font-weight:700;padding:6px 12px 6px 6px;border-radius:999px;letter-spacing:.04em}
 .flag img{width:24px;height:16px;object-fit:cover;border-radius:3px}
 .flag .cc{background:#fff;color:var(--navy);border-radius:4px;padding:0 5px;font-size:.7rem}
-.card .bd{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cflag{display:flex;align-items:center;gap:12px;padding:16px 20px;background:linear-gradient(120deg,var(--navy),var(--blue));color:#fff;font-weight:700;font-size:.9rem;letter-spacing:.04em}
+.cflag img{width:40px;height:27px;object-fit:cover;border-radius:4px;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.cflag .cc{background:#fff;color:var(--navy);border-radius:4px;padding:2px 7px;font-size:.78rem}
+.card.picked .cflag{background:linear-gradient(120deg,#075C2B,var(--green))}
+.card .bd{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
 .card h3{font-weight:800;font-size:1.12rem;line-height:1.25}
 .card .pais{font-size:.82rem;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
 .card ul{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:.88rem;color:var(--muted)}
@@ -499,7 +503,7 @@ async function rpc(fn, body){
 }
 
 function skeleton(){
-  $("#grid").innerHTML = Array.from({length:4},()=>`<div class="card skeleton"><div class="ph"></div><div class="bd"><h3>&nbsp;</h3></div></div>`).join("");
+  $("#grid").innerHTML = Array.from({length:4},()=>`<div class="card skeleton"><div class="cflag">&nbsp;</div><div class="bd"><h3>&nbsp;</h3></div></div>`).join("");
 }
 
 function avatarHTML(c, cls){
@@ -514,9 +518,9 @@ function render(){
   const abierta = estado() === "abierta";
   $("#grid").innerHTML = list.length ? list.map(c => `
     <article class="card${sel.includes(c.id)?" picked":""}">
-      <div class="ph">
-        ${c.foto_url ? `<img class="foto" src="${esc(c.foto_url)}" alt="${esc(c.nombre)}" loading="lazy">` : `<div class="ini" aria-hidden="true">${esc(ini(c.nombre))}</div>`}
-        <span class="flag"><img src="https://flagcdn.com/w40/${esc(c.codigo_pais.toLowerCase())}.png" alt="" onerror="this.outerHTML='<span class=cc>${esc(c.codigo_pais)}</span>'">${esc(paisDe(c))}</span>
+      <div class="cflag">
+        <img src="https://flagcdn.com/w80/${esc(c.codigo_pais.toLowerCase())}.png" alt="" width="40" height="27" onerror="this.outerHTML='<span class=cc>${esc(c.codigo_pais)}</span>'">
+        <span>${esc(paisDe(c))}</span>
       </div>
       <div class="bd">
         <span class="pais">${c.genero==="F"?"Femenino":c.genero==="M"?"Masculino":""}</span>
